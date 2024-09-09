@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/MyGame.dir/TextConsole/TextConsole.cpp.o CMakeFiles/MyGame.dir/Game/MyGame.cpp.o CMakeFiles/MyGame.dir/Game/Main.cpp.o -o MyGame  /usr/lib64/libSDL2main.a /usr/lib64/libSDL2-2.0.so.0.3000.3 -lpthread -static-libgcc -static-libstdc++ 

@@ -1,0 +1,3 @@
+/home/andres/Descargas/Game_Template/build/CMakeFiles/MyGame.dir
+/home/andres/Descargas/Game_Template/build/CMakeFiles/edit_cache.dir
+/home/andres/Descargas/Game_Template/build/CMakeFiles/rebuild_cache.dir
