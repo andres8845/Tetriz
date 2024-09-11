@@ -71,6 +71,24 @@ void MyGame::done(int tpoints, int lineas)
                 con.setCursor(16, col);
                 con << ' ';
             }
+            
+            valoresTomados.clear();
+            
+            //Actualizar valores del mapa
+            for (int y = 35; y > 11; y--)
+            {
+                for (int x = 16; x <= 44; x++)
+                {
+                    std::pair<int,int> coordenadas;
+                    coordenadas.first = y;
+                    coordenadas.second = x;
+                    if (con.getCharAt(y,x) != ' ')
+                    {
+                        valoresTomados.push_back(coordenadas);
+                    }
+                }
+            }
+
 
             tpoints += 1000;
             lineas++;
@@ -465,12 +483,16 @@ void MyGame::run()
         {
 
             bool valido = true;
+            std::pair<int, int> vp, vp2, vp3, vp4;
+            int it = 0;
             switch (key)
             {
             case SDLK_LEFT:
 
                 valido = true;
+                it = 0;
 
+                //Valores prohibidos y rango
                 for (auto &coord : bloque.coords)
                 {
                     if (coord.second - 1 < 16)
@@ -478,8 +500,41 @@ void MyGame::run()
                         valido = false;
                         break;
                     }
+                    
+                    if (it == 0)
+                    {
+                        vp = coord;
+                        vp.second--;
+                    }
+                    else if (it == 1)
+                    {
+                        vp2 = coord;
+                        vp2.second--;
+                    }
+                    else if (it == 2)
+                    {
+                        vp3 = coord;
+                        vp3.second--;
+                    }
+                    else
+                    {
+                        vp4 = coord;
+                        vp4.second--;
+                    }
+                    it++;
                 }
 
+
+                for (auto &coords : valoresTomados)
+                {
+                    if (vp == coords || vp2 == coords || vp3 == coords || vp4 == coords)
+                    {
+                        valido = false;
+                        break;
+                    }
+                }
+
+                
                 if (valido)
                 {
                     clearBlock(bloque);
@@ -495,7 +550,9 @@ void MyGame::run()
             case SDLK_RIGHT:
 
                 valido = true;
+                it = 0;
 
+                //Valores prohibidos y rango
                 for (auto &coord : bloque.coords)
                 {
                     if (coord.second + 1 > 44)
@@ -503,8 +560,40 @@ void MyGame::run()
                         valido = false;
                         break;
                     }
+
+                    if (it == 0)
+                    {
+                        vp = coord;
+                        vp.second++;
+                    }
+                    else if (it == 1)
+                    {
+                        vp2 = coord;
+                        vp2.second++;
+                    }
+                    else if (it == 2)
+                    {
+                        vp3 = coord;
+                        vp3.second++;
+                    }
+                    else
+                    {
+                        vp4 = coord;
+                        vp4.second++;
+                    }
+                    it++;
                 }
 
+                for (auto &coords : valoresTomados)
+                {
+                    if (vp == coords || vp2 == coords || vp3 == coords || vp4 == coords)
+                    {
+                        valido = false;
+                        break;
+                    }
+                }
+
+                
                 if (valido)
                 {
                     clearBlock(bloque);
@@ -526,6 +615,7 @@ void MyGame::run()
             case SDLK_DOWN:
                 valido = true;
 
+                //Valores prohibidos y rango
                 for (auto &coord : bloque.coords)
                 {
                     if (coord.first + 1 > 35)
@@ -533,8 +623,42 @@ void MyGame::run()
                         valido = false;
                         break;
                     }
+                    
+                    
+                    if (it == 0)
+                    {
+                        vp = coord;
+                        vp.first++;
+                    }
+                    else if (it == 1)
+                    {
+                        vp2 = coord;
+                        vp2.first++;
+                    }
+                    else if (it == 2)
+                    {
+                        vp3 = coord;
+                        vp3.first++;
+                    }
+                    else
+                    {
+                        vp4 = coord;
+                        vp4.first++;
+                    }
+                    it++;
                 }
 
+                // Comparamos con las posiciones ya ocupadas
+                for (auto &coordFijo : valoresTomados)
+                {
+                    if (vp == coordFijo || vp2 == coordFijo || vp3 == coordFijo || vp4 == coordFijo)
+                    {
+                        valido = false;
+                        break;
+                    }
+                }
+
+                // Si la validación es correcta, movemos la pieza hacia abajo
                 if (valido)
                 {
                     clearBlock(bloque);
